@@ -1,2 +1,0 @@
-/* AUTOMATICALLY GENERATED FROM @smogon/sets, DO NOT EDIT! */
-var SETDEX_DPP = {"Abomasnow":{"Test":{"level":42,"ability":"Snow Warning","item":"None","nature":"Relaxed","ivs":{"hp":30,"at":30,"df":30,"sa":30,"sd":30,"sp":30},"moves":["Avalanche","Wood Hammer","Water Pulse","Focus Blast",]}}};

@@ -10,7 +10,7 @@ setTimeout(() => {
     const checkboxes = document.querySelector('.trainer-poker-checkboxes');
     const trainerPok = document.querySelector('.trainer-pok-list-opposing');
 
-    // Object to store checkbox states per trainer
+    // Object to store checkbox states
     let checkboxStates = {};
 
     // Variable to store the currently selected trainer
@@ -26,7 +26,7 @@ setTimeout(() => {
             checkboxes.append(input);
 
             // Restore the checkbox state from the saved data
-            if (currentTrainer && checkboxStates[currentTrainer] && checkboxStates[currentTrainer][i]) {
+            if (checkboxStates[i]) {
                 input.checked = true;
                 trainerPok.childNodes[i].style.opacity = '0.3'; // Apply faded opacity
             }
@@ -39,28 +39,22 @@ setTimeout(() => {
                 if (this.checked) {
                     // If checkbox is checked, fade away the corresponding child node
                     childNode.style.opacity = '0.3';
-                    // Save state for current trainer
-                    if (currentTrainer) {
-                        if (!checkboxStates[currentTrainer]) {
-                            checkboxStates[currentTrainer] = {};
-                        }
-                        checkboxStates[currentTrainer][index] = true;
-                    }
+                    checkboxStates[index] = true; // Save state
                 } else {
                     // If checkbox is unchecked, reset opacity of the corresponding child node
                     childNode.style.opacity = '1';
-                    // Save state for current trainer
-                    if (currentTrainer && checkboxStates[currentTrainer]) {
-                        checkboxStates[currentTrainer][index] = false;
-                    }
+                    checkboxStates[index] = false; // Save state
                 }
             });
         }
     }
 
-    // Function to reset checkboxes for a new trainer
+    // Function to reset checkboxes
     function resetCheckboxes() {
-        // Clear the checkbox states for the current trainer
+        // Clear the checkbox states object
+        checkboxStates = {};
+
+        // Uncheck all checkboxes and reset opacity
         const inputs = checkboxes.querySelectorAll('.trainer-pok-checkbox-input');
         inputs.forEach((input, index) => {
             input.checked = false;
@@ -98,19 +92,9 @@ setTimeout(() => {
     function handleTrainerSelection(title) {
         const trainerName = extractTrainerName(title);
         if (trainerName && currentTrainer !== trainerName) {
-            // If a new trainer is selected, reset checkboxes and update the current trainer
+            // If a new trainer is selected, reset checkboxes
             resetCheckboxes();
             currentTrainer = trainerName;
-            // Check if there are saved states for the new trainer
-            if (checkboxStates[currentTrainer]) {
-                const inputs = checkboxes.querySelectorAll('.trainer-pok-checkbox-input');
-                inputs.forEach((input, index) => {
-                    if (checkboxStates[currentTrainer][index]) {
-                        input.checked = true;
-                        trainerPok.childNodes[index].style.opacity = '0.3'; // Apply faded opacity
-                    }
-                });
-            }
         }
     }
 
